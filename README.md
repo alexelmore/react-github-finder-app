@@ -1,1 +1,1 @@
-# react-github-finder-app
+# Small github finder application done using React Js
