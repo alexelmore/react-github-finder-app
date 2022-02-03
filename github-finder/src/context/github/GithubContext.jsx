@@ -14,6 +14,7 @@ export const GithubContextProvider = ({ children }) => {
     loading: false,
   };
 
+  // Destructured constants for useReducers hook
   const [state, dispatch] = useReducer(githubReducer, initialState);
 
   // Function that sets the loading state to true
