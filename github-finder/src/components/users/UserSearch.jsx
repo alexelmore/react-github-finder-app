@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
 import GithubContext from "../../context/github/GithubContext";
 function UserSearch() {
-  // Constant destructured from GithubContext
-  const { users, searchUsers } = useContext(GithubContext);
+  // Constants destructured from GithubContext
+  const { users, searchUsers, clearUsers } = useContext(GithubContext);
 
   // State for form input
   const [text, setText] = useState("");
@@ -11,7 +11,10 @@ function UserSearch() {
   const handleChange = (e) => setText(e.target.value);
 
   // Function that handles clearing the search input
-  const handleClear = (e) => setText("");
+  const handleClear = (e) => {
+    setText("");
+    clearUsers();
+  };
 
   // Function that handles form submission
   const handleSumbit = (e) => {

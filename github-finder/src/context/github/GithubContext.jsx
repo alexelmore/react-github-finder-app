@@ -23,6 +23,13 @@ export const GithubContextProvider = ({ children }) => {
     });
   };
 
+  // Function to clear users from state
+  const clearUsers = () => {
+    dispatch({
+      type: "CLEAR_USERS",
+    });
+  };
+
   // Function that searches for users
   const searchUsers = async (text) => {
     setLoading();
@@ -41,7 +48,12 @@ export const GithubContextProvider = ({ children }) => {
   };
   return (
     <GithubContext.Provider
-      value={{ users: state.users, loading: state.loading, searchUsers }}
+      value={{
+        users: state.users,
+        loading: state.loading,
+        searchUsers,
+        clearUsers,
+      }}
     >
       {children}
     </GithubContext.Provider>

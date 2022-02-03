@@ -4,7 +4,8 @@ function About() {
       <h1 className="text-6xl mb-4">Github Finder</h1>
       <p className="mb-4 text-2xl font-light">
         A React app to search GitHub profiles and see profile details. This
-        project utilizes React, React Router, Tailwind CSS and daisyUi.
+        project was developed with and utilizes React JS (React Router, React's
+        Context API, React Hooks), Tailwind CSS and daisyUi.
       </p>
       <p className="text-lg text-gray-400">
         Version <span className="text-white">1.0.0</span>
