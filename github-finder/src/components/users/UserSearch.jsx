@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import GithubContext from "../../context/github/GithubContext";
 function UserSearch() {
   // Constant destructured from GithubContext
-  const { users } = useContext(GithubContext);
+  const { users, searchUsers } = useContext(GithubContext);
 
   // State for form input
   const [text, setText] = useState("");
@@ -19,7 +19,7 @@ function UserSearch() {
     if (text === "") {
       alert("Please enter something");
     } else {
-      console.log("fired from submit");
+      searchUsers(text);
       setText("");
     }
   };
