@@ -11,6 +11,7 @@ export const GithubContextProvider = ({ children }) => {
   // Initial state object for the loading state and the user data
   const initialState = {
     users: [],
+    user: {},
     loading: false,
   };
 
@@ -47,13 +48,34 @@ export const GithubContextProvider = ({ children }) => {
       loading: false,
     });
   };
+
+  // Function that gets a single user
+  const getUser = async (login) => {
+    setLoading();
+    const userUrl = `${url}/users/${login}`;
+    const response = await fetch(`${userUrl}`);
+    if (response.status === 404) {
+      window.location = "/notfound";
+    } else {
+      const data = await response.json();
+
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+        loading: false,
+      });
+    }
+  };
+
   return (
     <GithubContext.Provider
       value={{
         users: state.users,
         loading: state.loading,
+        user: state.user,
         searchUsers,
         clearUsers,
+        getUser,
       }}
     >
       {children}
