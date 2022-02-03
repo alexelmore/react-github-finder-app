@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Spinner from "../../shared/Spinner";
+import UserItem from "./UserItem";
 function UserResults() {
   // API token and URL constant
   const url = process.env.REACT_APP_GITHUB_URL;
@@ -25,7 +26,7 @@ function UserResults() {
     return (
       <div className="grid grid-cols-1 gap-8 xl:grid-cols-4 lg:grid-cols-3">
         {userData.map((user) => (
-          <h3 key={user.id}>{user.login}</h3>
+          <UserItem key={user.id} user={user} />
         ))}
       </div>
     );
