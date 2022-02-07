@@ -26,7 +26,7 @@ function User() {
       dispatch({ type: "GET_REPOS", payload: userRepos });
     };
     getUserData();
-  }, []);
+  }, [dispatch, params.login]);
 
   // Destructure all the properties from the returned user object and make them constants
   const {
