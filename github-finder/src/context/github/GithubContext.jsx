@@ -12,6 +12,7 @@ export const GithubContextProvider = ({ children }) => {
   const initialState = {
     users: [],
     user: {},
+    repos: [],
     loading: false,
   };
 
@@ -58,7 +59,7 @@ export const GithubContextProvider = ({ children }) => {
       window.location = "/notfound";
     } else {
       const data = await response.json();
-
+      console.log("data:", data);
       dispatch({
         type: "GET_USER",
         payload: data,
@@ -67,15 +68,36 @@ export const GithubContextProvider = ({ children }) => {
     }
   };
 
+  //Function to retrieve single user's repos
+  // Function that searches for users
+  const getUserRepos = async (login) => {
+    setLoading();
+    const params = new URLSearchParams({
+      sort: "created",
+      per_page: 10,
+    });
+    const response = await fetch(
+      `https://api.github.com/users/${login}/repos?${params}`
+    );
+    const data = await response.json();
+
+    dispatch({
+      type: "GET_REPOS",
+      payload: data,
+    });
+  };
+
   return (
     <GithubContext.Provider
       value={{
         users: state.users,
         loading: state.loading,
         user: state.user,
+        repos: state.repos,
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {children}
