@@ -5,18 +5,27 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Spinner from "../../shared/Spinner";
 import RepoList from "../repos/RepoList";
-
+import { getUser, getUserRepos } from "../../context/github/GitHubActions";
 function User() {
-  const { getUser, user, loading, getUserRepos, repos } = useContext(
-    GithubContext
-  );
+  const { dispatch, user, loading, repos } = useContext(GithubContext);
 
   const params = useParams();
 
   // useEffect used to call the getUser function
   useEffect(() => {
-    getUser(params.login);
-    getUserRepos(params.login);
+    dispatch({
+      type: "SET_LOADING",
+    });
+    // Get user data
+    const getUserData = async () => {
+      const userData = await getUser(params.login);
+      dispatch({ type: "GET_USER", payload: userData });
+
+      // Get user repos
+      const userRepos = await getUserRepos(params.login);
+      dispatch({ type: "GET_REPOS", payload: userRepos });
+    };
+    getUserData();
   }, []);
 
   // Destructure all the properties from the returned user object and make them constants

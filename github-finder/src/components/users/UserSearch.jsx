@@ -1,9 +1,10 @@
 import { useState, useContext } from "react";
 import GithubContext from "../../context/github/GithubContext";
 import AlertContext from "../../context/alert/AlertContext";
+import { searchUsers, clearUsers } from "../../context/github/GitHubActions";
 function UserSearch() {
   // Constants destructured from GithubContext
-  const { users, searchUsers, clearUsers } = useContext(GithubContext);
+  const { users, dispatch } = useContext(GithubContext);
 
   const { setAlert } = useContext(AlertContext);
 
@@ -16,16 +17,26 @@ function UserSearch() {
   // Function that handles clearing the search input
   const handleClear = (e) => {
     setText("");
-    clearUsers();
+    const type = clearUsers();
+    dispatch({
+      type,
+    });
   };
 
   // Function that handles form submission
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
     if (text === "") {
       setAlert("Please enter something", "error");
     } else {
-      searchUsers(text);
+      dispatch({
+        type: "SET_LOADING",
+      });
+      const users = await searchUsers(text);
+      dispatch({
+        type: "GET_USERS",
+        payload: users,
+      });
       setText("");
     }
   };
